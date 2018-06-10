@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">PaceCalculator</string>
     <string name="race">Race:</string>
+    <string name="distance">Distance</string>
+    <string name="time">Time:</string>
+    <string name="pace">Pace:</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+    <string name="split">Split</string>
+    <string name="calculate">Calculate</string>
 </resources>
