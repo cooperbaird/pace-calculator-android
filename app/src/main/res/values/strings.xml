@@ -9,4 +9,17 @@
     <string name="seconds">Seconds</string>
     <string name="split">Split</string>
     <string name="calculate">Calculate</string>
+    <string name="toggle_m">Miles</string>
+    <string name="toggle_k">Kilometers</string>
+
+    <string name="distance_prompt">Choose a Race</string>
+    <string-array name="distances">
+        <item></item>
+        <item>3K</item>
+        <item>5K</item>
+        <item>8K</item>
+        <item>10K</item>
+        <item>Half Marathon</item>
+        <item>Marathon</item>
+    </string-array>
 </resources>
