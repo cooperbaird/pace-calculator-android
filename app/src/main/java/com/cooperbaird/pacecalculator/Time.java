@@ -27,6 +27,6 @@ public class Time extends AbstractTime {
 
 	@Override
 	public double getAbstractTimeInSeconds() {
-		return hours*3600 + getMinutes()*60 + getSeconds();
+		return getHours()*3600 + getMinutes()*60 + getSeconds();
 	}
 }

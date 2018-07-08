@@ -37,10 +37,17 @@ public class Split {
 		String secs = Double.toString(time.getRoundedSeconds(3));
 		if(time.getSeconds() < 10)
 			secs = "0" + secs;
+
 		String mins = Integer.toString(time.getMinutes());
 		if(time.getMinutes() < 10)
 			mins = "0" + mins;
+
+		String hrs = Integer.toString(time.getHours()) + ":";
+		if(time.getHours() == 0)
+			hrs = "";
+		else if(time.getHours() < 10)
+			hrs = "0" + hrs;
 		
-		return lap + ":\t" + time.getHours() + ":" + mins + ":" + secs + "\n";
+		return hrs + mins + ":" + secs;
 	}
 }
