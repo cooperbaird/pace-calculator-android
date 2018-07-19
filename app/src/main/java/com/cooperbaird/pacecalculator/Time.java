@@ -25,6 +25,13 @@ public class Time extends AbstractTime {
 		return hours;
 	}
 
+    /**
+     * @return the hours as a string
+     */
+	public String getHoursAsString() {
+	    return Integer.toString(hours);
+    }
+
 	@Override
 	public double getAbstractTimeInSeconds() {
 		return getHours()*3600 + getMinutes()*60 + getSeconds();

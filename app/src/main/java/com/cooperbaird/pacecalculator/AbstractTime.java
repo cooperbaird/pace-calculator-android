@@ -26,6 +26,13 @@ public abstract class AbstractTime {
 		return minutes;
 	}
 
+    /**
+     * @return the minutes as a string
+     */
+	public String getMinutesAsString() {
+	    return Integer.toString(minutes);
+    }
+
 	/**
 	 * @return the seconds
 	 */

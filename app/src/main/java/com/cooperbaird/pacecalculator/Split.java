@@ -25,6 +25,13 @@ public class Split {
 		return lap;
 	}
 
+    /**
+     * @return the split's lap number as a string
+     */
+	public String getLapAsString() {
+	    return Integer.toString(lap);
+    }
+
 	/**
 	 * @return the split's time
 	 */
