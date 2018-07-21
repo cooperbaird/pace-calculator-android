@@ -4,5 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorDarkGrey">#A9A9A9</color>
-    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack">#000000</color>
+    <color name="paperYellow">#f7ecb8</color>
+    <color name="paperBlue">#bee2bb</color>
+    <color name="paperRed">#f59f8d</color>
+    <color name="pad">#5a3616</color>
+    <color name="buttonGrey">#ffd6d7d7</color>
 </resources>

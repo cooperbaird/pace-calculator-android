@@ -10,7 +10,8 @@
     <string name="split">Split</string>
     <string name="calculate">Calculate</string>
     <string name="toggle_m">Miles</string>
-    <string name="toggle_k">Kilometers</string>
+    <string name="toggle_k">Km</string>
+    <string name="reset_values">Reset</string>
 
     <string name="distance_prompt">Choose a Race</string>
     <string-array name="distances">

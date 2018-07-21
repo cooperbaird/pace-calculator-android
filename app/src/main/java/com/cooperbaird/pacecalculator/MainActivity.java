@@ -1,14 +1,20 @@
 package com.cooperbaird.pacecalculator;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,10 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText distanceText, splitText;
-    private EditText timeHours, timeMinutes, timeSeconds;
-    private EditText paceMinutes, paceSeconds;
-    private ToggleButton distanceToggle, splitToggle;
+    private EditText mDistanceText, mSplitText;
+    private EditText mTimeHours, mTimeMinutes, mTimeSeconds;
+    private EditText mPaceMinutes, mPaceSeconds;
+    private ToggleButton mDistanceToggle, mSplitToggle;
+    private Spinner spinner;
     private RecyclerView mSplitRecyclerView;
     private SplitAdapter mAdapter;
     private List<Split> mSplitList = new ArrayList<>();
@@ -34,59 +41,64 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        distanceText = findViewById(R.id.distance);
-        splitText = findViewById(R.id.split);
-        timeHours = findViewById(R.id.time_hours);
-        timeMinutes = findViewById(R.id.time_minutes);
-        timeSeconds = findViewById(R.id.time_seconds);
-        paceMinutes = findViewById(R.id.pace_minutes);
-        paceSeconds = findViewById(R.id.pace_seconds);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
-        distanceToggle = findViewById(R.id.distance_toggle);
-        splitToggle = findViewById(R.id.split_toggle);
+        mDistanceText = findViewById(R.id.distance);
+        mSplitText = findViewById(R.id.split);
+        mTimeHours = findViewById(R.id.time_hours);
+        mTimeMinutes = findViewById(R.id.time_minutes);
+        mTimeSeconds = findViewById(R.id.time_seconds);
+        mPaceMinutes = findViewById(R.id.pace_minutes);
+        mPaceSeconds = findViewById(R.id.pace_seconds);
+
+        mDistanceToggle = findViewById(R.id.distance_toggle);
+        mSplitToggle = findViewById(R.id.split_toggle);
 
         mSplitRecyclerView = findViewById(R.id.split_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mSplitRecyclerView.setLayoutManager(layoutManager);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mSplitRecyclerView.getContext(), layoutManager.getOrientation());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mSplitRecyclerView.getContext(),
+                layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider));
         mSplitRecyclerView.addItemDecoration(dividerItemDecoration);
 
         updateUI();
 
-        final Spinner spinner = findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String selection = spinner.getSelectedItem().toString();
                 switch(selection) {
                     case "3K":
-                        distanceText.setText("3");
-                        distanceToggle.setChecked(false);
+                        mDistanceText.setText("3");
+                        mDistanceToggle.setChecked(false);
                         break;
                     case "5K":
-                        distanceText.setText("5");
-                        distanceToggle.setChecked(false);
+                        mDistanceText.setText("5");
+                        mDistanceToggle.setChecked(false);
                         break;
                     case "8K":
-                        distanceText.setText("8");
-                        distanceToggle.setChecked(false);
+                        mDistanceText.setText("8");
+                        mDistanceToggle.setChecked(false);
                         break;
                     case "10K":
-                        distanceText.setText("10");
-                        distanceToggle.setChecked(false);
+                        mDistanceText.setText("10");
+                        mDistanceToggle.setChecked(false);
                         break;
                     case "Half Marathon":
-                        distanceText.setText("13.109375");
-                        distanceToggle.setChecked(true);
+                        mDistanceText.setText("13.109375");
+                        mDistanceToggle.setChecked(true);
                         break;
                     case "Marathon":
-                        distanceText.setText("26.21875");
-                        distanceToggle.setChecked(true);
+                        mDistanceText.setText("26.21875");
+                        mDistanceToggle.setChecked(true);
                         break;
                     default:
-                        distanceText.setText(null);
-                        distanceToggle.setChecked(true);
+                        mDistanceText.setText(null);
+                        mDistanceToggle.setChecked(true);
                         break;
                 }
             }
@@ -109,22 +121,62 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void calculate() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.reset:
+                reset();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void reset() {
+        mDistanceText.setText("");
+        mSplitText.setText("");
+        mTimeHours.setText("");
+        mTimeMinutes.setText("");
+        mTimeSeconds.setText("");
+        mPaceMinutes.setText("");
+        mPaceSeconds.setText("");
+        spinner.setSelection(0);
+        mDistanceToggle.setChecked(true);
+        mSplitToggle.setChecked(true);
         mSplitList.clear();
-        String d = distanceText.getText().toString().trim();
-        String tH = timeHours.getText().toString().trim();
-        String tM = timeMinutes.getText().toString().trim();
-        String tS = timeSeconds.getText().toString().trim();
-        String pM = paceMinutes.getText().toString().trim();
-        String pS = paceSeconds.getText().toString().trim();
-        String split = splitText.getText().toString().trim();
+        updateUI();
+    }
+
+    private void calculate() {
+        // shift focus to main activity and hide keyboard
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+        findViewById(R.id.mainLayout).requestFocus();
+
+        mSplitList.clear();
+
+        String d = mDistanceText.getText().toString();
+        String tH = mTimeHours.getText().toString();
+        String tM = mTimeMinutes.getText().toString();
+        String tS = mTimeSeconds.getText().toString();
+        String pM = mPaceMinutes.getText().toString();
+        String pS = mPaceSeconds.getText().toString();
+        String split = mSplitText.getText().toString();
 
         char units = 'm';
-        if(!distanceToggle.isChecked())
+        if(!mDistanceToggle.isChecked())
             units = 'k';
 
         char sUnits = 'm';
-        if(!splitToggle.isChecked())
+        if(!mSplitToggle.isChecked())
             sUnits = 'k';
 
         if(!d.equals("") && (!tH.equals("") || !tM.equals("") || !tS.equals(""))) {
@@ -137,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(!split.equals("")) {
-            calcSplits(d, tH, tM, tS, split, units, sUnits);
+            calcSplits(mDistanceText.getText().toString(), mTimeHours.getText().toString(),
+                    mTimeMinutes.getText().toString(), mTimeSeconds.getText().toString(), split, units, sUnits);
         }
     }
 
@@ -150,33 +203,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void calcDistance(String tH, String tM, String tS, String pM, String pS, char units) {
         Time time = parseTime(tH, tM, tS);
-        Pace pace = new Pace(Integer.parseInt(pM), Double.parseDouble(pS));
+        Pace pace = parsePace(pM, pS);
         double distance = RunningCalculations.calculateDistance(units, pace, time);
         distance = RunningCalculations.roundToDecimal(distance, 3);
-        distanceText.setText(Double.toString(distance));
+        mDistanceText.setText(Double.toString(distance));
     }
 
     private void calcTime(String d, String pM, String pS, char units) {
-        Pace pace = new Pace(Integer.parseInt(pM), Double.parseDouble(pS));
+        Pace pace = parsePace(pM, pS);
         Time time = RunningCalculations.calculateTime(units, Double.parseDouble(d), pace);
 
-        timeHours.setText(time.getHoursAsString());
+        mTimeHours.setText(time.getHoursAsString());
 
         String strMinutes = time.getMinutesAsString();
         if(time.getMinutes() < 10 && time.getHours() > 0)
             strMinutes = "0" + strMinutes;
-        timeMinutes.setText(strMinutes);
+        mTimeMinutes.setText(strMinutes);
 
         String strSecs = getStringSeconds(time);
-        timeSeconds.setText(strSecs);
+        mTimeSeconds.setText(strSecs);
     }
 
     private void calcPace(String d, String tH, String tM, String tS, char units) {
         Time time = parseTime(tH, tM, tS);
         Pace pace = RunningCalculations.calculatePace(units, Double.parseDouble(d), time);
-        paceMinutes.setText(pace.getMinutesAsString());
+        mPaceMinutes.setText(pace.getMinutesAsString());
         String strSecs = getStringSeconds(pace);
-        paceSeconds.setText(strSecs);
+        mPaceSeconds.setText(strSecs);
     }
 
     private Time parseTime(String hours, String minutes, String seconds) {
@@ -199,6 +252,22 @@ public class MainActivity extends AppCompatActivity {
             sec = Double.parseDouble(seconds);
 
         return new Time(hrs, min, sec);
+    }
+
+    private Pace parsePace(String minutes, String seconds) {
+        int min;
+        if(minutes.equals(""))
+            min = 0;
+        else
+            min = Integer.parseInt(minutes);
+
+        double sec;
+        if(seconds.equals(""))
+            sec = 0;
+        else
+            sec = Double.parseDouble(seconds);
+
+        return new Pace(min, sec);
     }
 
     private String getStringSeconds(AbstractTime t) {
