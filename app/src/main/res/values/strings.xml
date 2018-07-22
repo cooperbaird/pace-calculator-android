@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PaceCalculator</string>
+    <string name="app_name">Pace Calculator</string>
     <string name="race">Race:</string>
     <string name="distance">Distance</string>
     <string name="time">Time:</string>
@@ -8,6 +8,7 @@
     <string name="minutes">Minutes</string>
     <string name="seconds">Seconds</string>
     <string name="split">Split</string>
+    <string name="splits">Splits:</string>
     <string name="calculate">Calculate</string>
     <string name="toggle_m">Miles</string>
     <string name="toggle_k">Km</string>
