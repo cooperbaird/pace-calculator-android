@@ -41,9 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-
         mDistanceText = findViewById(R.id.distance);
         mSplitText = findViewById(R.id.split);
         mTimeHours = findViewById(R.id.time_hours);

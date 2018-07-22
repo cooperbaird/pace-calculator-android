@@ -10,5 +10,6 @@
     <color name="paperBlue">#bee2bb</color>
     <color name="paperRed">#f59f8d</color>
     <color name="pad">#5a3616</color>
+    <color name="darkPad">#4c2c10</color>
     <color name="buttonGrey">#ffd6d7d7</color>
 </resources>
