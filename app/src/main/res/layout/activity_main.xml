@@ -239,6 +239,7 @@
             android:layout_marginEnd="8dp"
             android:backgroundTint="@color/paperRed"
             android:hint="@string/seconds"
+            android:inputType="numberDecimal"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
